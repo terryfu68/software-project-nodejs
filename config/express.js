@@ -13,22 +13,20 @@ module.exports.configureExpress = () => {
     // Use the 'NDOE_ENV' variable to activate the 'morgan' logger or 'compress' middleware
     if (process.env.NODE_ENV === 'development') {
         app.use(morgan('dev'));
-    }
-    else if (process.env.NODE_ENV === 'production') {
+    } else if (process.env.NODE_ENV === 'production') {
         app.use(compress());
     }
 
     // Middlewares
     app.use(session({
-        saveUninitialized: true,        
+        saveUninitialized: true,
         secret: config.sessionSecret
     }));
     app.use(bodyParser());
     app.use(methodOverride());
-        
 
     //Routes
-    require('../app/routes/login.routes')(app);        
+    require('../app/routes/login.routes')(app);
 
     return app;
 }

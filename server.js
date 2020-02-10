@@ -1,6 +1,9 @@
 // Set the 'NODE_ENV' variable
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
+// Initialize database
+require('./app/modules/database');
+
 // Load the 'express' module
 const express = require('./config/express');
 

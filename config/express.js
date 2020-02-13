@@ -25,7 +25,6 @@ module.exports.configureExpress = () => {
     }));
     app.use(bodyParser());
     app.use(methodOverride());
-
     app.use(cors({
         origin: 'http://localhost:4200'
     }));

@@ -4,6 +4,7 @@ const session = require('express-session');
 const morgan = require('morgan');
 const compress = require('compression');
 const methodOverride = require('method-override');
+const cors = require('cors');
 
 const config = require('./config');
 
@@ -25,6 +26,10 @@ module.exports.configureExpress = () => {
     app.use(bodyParser());
     app.use(methodOverride());
 
+    app.use(cors({
+        origin: 'http://localhost:4200'
+    }));
+	
     //Routes
     require('../app/routes/login.routes')(app);
 

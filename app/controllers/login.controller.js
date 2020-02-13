@@ -1,4 +1,4 @@
 exports.login = (req, res) => {
     // TODO: validate the user properly
-    res.status(200);
+    res.end(JSON.stringify({ loggedIn: true }));
 };

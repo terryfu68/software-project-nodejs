@@ -15,5 +15,6 @@ const findById = async (id) => {
 module.exports = {
     create,
     findAll,
+    findOne,
     findById
 };

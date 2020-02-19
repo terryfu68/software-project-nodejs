@@ -8,6 +8,10 @@ const findAll = async (query) => {
     return Partner.find(query);
 };
 
+const findOne = async (query) => {
+    return Partner.findOne(query);
+};
+
 const findById = async (id) => {
     return Partner.findById(id);
 };
@@ -15,5 +19,6 @@ const findById = async (id) => {
 module.exports = {
     create,
     findAll,
+    findOne,
     findById
 };

@@ -31,6 +31,7 @@ module.exports.configureExpress = () => {
 	
     //Routes
     require('../app/routes/login.routes')(app);
+    require('../app/routes/dish.routes')(app);
 
     return app;
 }

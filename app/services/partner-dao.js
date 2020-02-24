@@ -16,9 +16,24 @@ const findById = async (id) => {
     return Partner.findById(id);
 };
 
+const findOne = async (query) => {
+    return Partner.findOne(query);
+};
+
+
+const deleteAll = async () => {
+    return Partner.remove();
+};
+
+const createAll = async (partners) => {
+    return Partner.insertMany(partners);
+};
+
 module.exports = {
     create,
     findAll,
+    findById,
     findOne,
-    findById
+    deleteAll,
+    createAll,
 };

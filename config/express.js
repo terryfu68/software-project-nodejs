@@ -28,10 +28,11 @@ module.exports.configureExpress = () => {
     app.use(cors({
         origin: 'http://localhost:4200'
     }));
-	
+
     //Routes
     require('../app/routes/login.routes')(app);
     require('../app/routes/dish.routes')(app);
+    require('../app/routes/order.routes')(app);
 
     return app;
 }

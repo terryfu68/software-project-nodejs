@@ -1,7 +1,7 @@
 const CustomerDao = require('../services/customer-dao');
 
 const customer = async () => {
-    let eduardo = await CustomerDao.findOne({'username': 'eduardoewgo'});
+    let eduardo = await CustomerDao.findOne({ 'username': 'eduardoewgo' });
 
     if (!eduardo) return CustomerDao.create({
         username: 'eduardoewgo',
@@ -47,199 +47,221 @@ const DishtypeDao = require('../services/dishtype-dao');
 const DishDao = require('../services/dish-dao');
 const PartnerDao = require('../services/partner-dao');
 const DishAvailabilityDao = require('../services/dishavailability-dao');
+const OrderDao = require('../services/order-dao');
+const OrderItemDao = require('../services/order-item-dao');
 
 const dishtype = async () => {
     DishtypeDao.deleteAll();
-    return DishtypeDao.createAll([{typeName:'drink'},{typeName:'main'},{typeName:'dessert'}]);
-       
+    return DishtypeDao.createAll([{ typeName: 'drink' }, { typeName: 'main' }, { typeName: 'dessert' }]);
 };
-
 
 const dish = async () => {
     DishDao.deleteAll();
-    let dessert=await (DishtypeDao.findOne({'typeName': 'dessert'}));
-    let main=await (DishtypeDao.findOne({'typeName': 'main'}));
-    let drink=await (DishtypeDao.findOne({'typeName': 'drink'}));
+    let dessert = await (DishtypeDao.findOne({ 'typeName': 'dessert' }));
+    let main = await (DishtypeDao.findOne({ 'typeName': 'main' }));
+    let drink = await (DishtypeDao.findOne({ 'typeName': 'drink' }));
 
     return DishDao.createAll([
-    {
-        name: 'Chocolate Cake',
-        description: 'This is a chocolate cake',
-        image: 'Chocolate Cake Picture',
-        dishType: dessert.id,
-        partner: PartnerDao.id,
-        dishAvailability: DishAvailabilityDao.dish
-    },
-    {
-        name: 'Pizza',
-        description: 'This is a pizza',
-        image: 'Pizza Picture',
-        dishType: main.id,
-        partner: PartnerDao.id,
-        dishAvailability: DishAvailabilityDao.dish
-    },
-    {
-        name: 'Orange Juice',
-        description: 'This is a orange juice',
-        image: 'Orange Juice Picture',
-        dishType: drink.id,
-        partner: PartnerDao.id,
-        dishAvailability: DishAvailabilityDao.dish
-    }]);
-        
+        {
+            name: 'Chocolate Cake',
+            description: 'This is a chocolate cake',
+            image: 'Chocolate Cake Picture',
+            dishType: dessert.id,
+            partner: PartnerDao.id,
+            dishAvailability: DishAvailabilityDao.dish
+        },
+        {
+            name: 'Pizza',
+            description: 'This is a pizza',
+            image: 'Pizza Picture',
+            dishType: main.id,
+            partner: PartnerDao.id,
+            dishAvailability: DishAvailabilityDao.dish
+        },
+        {
+            name: 'Orange Juice',
+            description: 'This is a orange juice',
+            image: 'Orange Juice Picture',
+            dishType: drink.id,
+            partner: PartnerDao.id,
+            dishAvailability: DishAvailabilityDao.dish
+        }]);
 };
-
 
 const dishavailability = async () => {
     DishAvailabilityDao.deleteAll();
-    let cake=await (DishDao.findOne({'name': 'Chocolate Cake'}));
-    let pizza=await (DishDao.findOne({'name': 'Pizza'}));
-    let juice=await (DishDao.findOne({'name': 'Orange Juice'}));
+    let cake = await (DishDao.findOne({ 'name': 'Chocolate Cake' }));
+    let pizza = await (DishDao.findOne({ 'name': 'Pizza' }));
+    let juice = await (DishDao.findOne({ 'name': 'Orange Juice' }));
     return DishAvailabilityDao.createAll([
-    {
-        startDate: Date.now(),
-        endDate: Date.now()+3,
-        originalPrice: 16,
-        discountPrice: 12,
-        quantity: 3,
-        quantityTotal: 6,
-        dish: cake.id
+        {
+            startDate: Date.now(),
+            endDate: Date.now() + 3,
+            originalPrice: 16,
+            discountPrice: 12,
+            quantity: 3,
+            quantityTotal: 6,
+            dish: cake.id
+        },
+        {
+            startDate: Date.now() - 1,
+            endDate: Date.now() + 2,
+            originalPrice: 12,
+            discountPrice: 11,
+            quantity: 5,
+            quantityTotal: 10,
+            dish: pizza.id
 
-    },
-    {
-        startDate: Date.now()-1,
-        endDate: Date.now()+2,
-        originalPrice: 12,
-        discountPrice: 11,
-        quantity: 5,
-        quantityTotal: 10,
-        dish: pizza.id
+        },
+        {
+            startDate: Date.now(),
+            endDate: Date.now() + 1,
+            originalPrice: 8,
+            discountPrice: 6,
+            quantity: 10,
+            quantityTotal: 20,
+            dish: juice.id
 
-    },
-    {
-        startDate: Date.now(),
-        endDate: Date.now()+1,
-        originalPrice: 8,
-        discountPrice: 6,
-        quantity: 10,
-        quantityTotal: 20,
-        dish: juice.id
+        }]);
 
-    }]);
-        
 };
-
 
 const partner = async () => {
     PartnerDao.deleteAll();
-    let cakeId=(await (DishDao.findOne({'name': 'Chocolate Cake'}))).id;
-    let pizzaId=(await (DishDao.findOne({'name': 'Pizza'}))).id;
-    let juiceId=(await (DishDao.findOne({'name': 'Orange Juice'}))).id;
- 
+    let cakeId = (await (DishDao.findOne({ 'name': 'Chocolate Cake' }))).id;
+    let pizzaId = (await (DishDao.findOne({ 'name': 'Pizza' }))).id;
+    let juiceId = (await (DishDao.findOne({ 'name': 'Orange Juice' }))).id;
+
     return PartnerDao.createAll([
-    {
-        name: 'Serano Bakery',
-        rate: 4.7,
-        address: '830 Pape Ave',
-        city: 'Toronto',
-        postalCode: 'M4K 3T5',
-        longitude: '43.682893',
-        latitude: '-79.346803',
-        dishes:[cakeId]
+        {
+            name: 'Serano Bakery',
+            rate: 4.7,
+            address: '830 Pape Ave',
+            city: 'Toronto',
+            postalCode: 'M4K 3T5',
+            longitude: '43.682893',
+            latitude: '-79.346803',
+            dishes: [cakeId]
+        },
+        {
+            name: 'Pizza Hut',
+            rate: 2.6,
+            address: '720 King St W',
+            city: 'Toronto',
+            postalCode: 'M5V 2T3',
+            longitude: '43.643909',
+            latitude: '-79.404150',
+            dishes: [pizzaId]
 
-    },
-    {
-        name: 'Pizza Hut',
-        rate: 2.6,
-        address: '720 King St W',
-        city: 'Toronto',
-        postalCode: 'M5V 2T3',
-        longitude: '43.643909',
-        latitude: '-79.404150',
-        dishes:[pizzaId]
+        },
+        {
+            name: 'Greenhouse Juice Co',
+            rate: 4.2,
+            address: '5 Macpherson Ave',
+            city: 'Toronto',
+            postalCode: 'M5R 1W7',
+            longitude: '43.678943',
+            latitude: '-79.390782',
+            dishes: [juiceId]
 
-    },
-    {
-        name: 'Greenhouse Juice Co',
-        rate: 4.2,
-        address: '5 Macpherson Ave',
-        city: 'Toronto',
-        postalCode: 'M5R 1W7',
-        longitude: '43.678943',
-        latitude: '-79.390782',
-        dishes:[juiceId]
+        }]);
 
-    }]);
-        
 };
-
 
 const updatedish = async () => {
-    let dessert=await (DishtypeDao.findOne({'typeName': 'dessert'}));
-    let main=await (DishtypeDao.findOne({'typeName': 'main'}));
-    let drink=await (DishtypeDao.findOne({'typeName': 'drink'}));
+    let dessert = await (DishtypeDao.findOne({ 'typeName': 'dessert' }));
+    let main = await (DishtypeDao.findOne({ 'typeName': 'main' }));
+    let drink = await (DishtypeDao.findOne({ 'typeName': 'drink' }));
 
-    let cakeId=(await (DishDao.findOne({'name': 'Chocolate Cake'}))).id;
-    let pizzaId=(await (DishDao.findOne({'name': 'Pizza'}))).id;
-    let juiceId=(await (DishDao.findOne({'name': 'Orange Juice'}))).id;
-
-
-    DishDao.updateOne(
-    {   _id: cakeId },
-    {
-        name: 'Chocolate Cake',
-        description: 'This is a chocolate cake',
-        image: 'Chocolate Cake Picture',
-        dishType: dessert.id,
-        partner: (await PartnerDao.findOne({'name': 'Serano Bakery'})).id,
-        dishAvailability: [(await DishAvailabilityDao.findAll({'dish':cakeId})).pop().id]
-    });
+    let cakeId = (await (DishDao.findOne({ 'name': 'Chocolate Cake' }))).id;
+    let pizzaId = (await (DishDao.findOne({ 'name': 'Pizza' }))).id;
+    let juiceId = (await (DishDao.findOne({ 'name': 'Orange Juice' }))).id;
 
 
     DishDao.updateOne(
-    {   _id: pizzaId },
-    {
-        name: 'Pizza',
-        description: 'This is a pizza',
-        image: 'Pizza Picture',
-        dishType: main.id,
-        partner: (await PartnerDao.findOne({'name': 'Pizza Hut'})).id,
-        dishAvailability: [(await DishAvailabilityDao.findAll({'dish':pizzaId})).pop().id]
-    });
+        { _id: cakeId },
+        {
+            name: 'Chocolate Cake',
+            description: 'This is a chocolate cake',
+            image: 'Chocolate Cake Picture',
+            dishType: dessert.id,
+            partner: (await PartnerDao.findOne({ 'name': 'Serano Bakery' })).id,
+            dishAvailability: [(await DishAvailabilityDao.findAll({ 'dish': cakeId })).pop().id]
+        });
 
 
-    
     DishDao.updateOne(
-    {   _id: juiceId },
-    {
-        name: 'Orange Juice',
-        description: 'This is a orange juice',
-        image: 'Orange Juice Picture',
-        dishType: drink.id,
-        partner: (await PartnerDao.findOne({'name': 'Greenhouse Juice Co'})).id,
-        dishAvailability: [(await DishAvailabilityDao.findAll({'dish':juiceId})).pop().id]
-    });
+        { _id: pizzaId },
+        {
+            name: 'Pizza',
+            description: 'This is a pizza',
+            image: 'Pizza Picture',
+            dishType: main.id,
+            partner: (await PartnerDao.findOne({ 'name': 'Pizza Hut' })).id,
+            dishAvailability: [(await DishAvailabilityDao.findAll({ 'dish': pizzaId })).pop().id]
+        });
+
+
+
+    DishDao.updateOne(
+        { _id: juiceId },
+        {
+            name: 'Orange Juice',
+            description: 'This is a orange juice',
+            image: 'Orange Juice Picture',
+            dishType: drink.id,
+            partner: (await PartnerDao.findOne({ 'name': 'Greenhouse Juice Co' })).id,
+            dishAvailability: [(await DishAvailabilityDao.findAll({ 'dish': juiceId })).pop().id]
+        });
 
     return;
-        
 };
 
-const partner = async () => {
+const order = async () => {
+    OrderDao.deleteAll();
 
-    let partnerTmp1 = await PartnerDao.findOne({'name': 'Andrea'});
+    const partnerId = (await (PartnerDao.findOne({ 'name': 'Serano Bakery' }))).id;
+    const customerId = (await (CustomerDao.findOne({ 'username': 'eduardoewgo' }))).id;
+    // const dishId = (await (DishAvailabilityDao.findOne({ 'name': 'Chocolate Cake' }))).id;
 
-    if (!partnerTmp1) return PartnerDao.create({
-        name: 'Andrea',
-        rate: '4',
-        address: '941 Progress Avenue',
-        city: 'Toronto',
-        postalCode: 'M1G3T8',
-        longitude: '1',
-        latitude: '1'
-
-    });
+    return await OrderDao.createAll([
+        {
+            status: 1,
+            orderedAt: new Date(),
+            items: [],
+            partner: partnerId,
+            customer: customerId
+        }
+    ]);
 };
 
+const orderItem = async () => {
+    await OrderItemDao.deleteAll();
+
+    const orderId = (await (OrderDao.findAll()))[0].id;
+    const cake = await (DishDao.findOne({ 'name': 'Chocolate Cake' }));
+    const dishId = (await (DishAvailabilityDao.findOne({ 'dish': cake.id }))).id;
+
+    return await OrderItemDao.create([
+        {
+            quantity: 2,
+            order: orderId,
+            dishAvailability: dishId
+        }
+    ]);
+};
+
+const updateOrder = async () => {
+    const orderItemId = (await (OrderItemDao.findOne({ quantity: 2 }))).id;
+    const orderId = (await (OrderDao.findOne({ 'status': 1 })));
+
+    OrderDao.updateOne(
+        { _id: orderId },
+        {
+            items: [orderItemId]
+        }
+    )
+}
 
 
 module.exports = {
@@ -249,4 +271,7 @@ module.exports = {
     dishavailability,
     partner,
     updatedish,
+    order,
+    orderItem,
+    updateOrder
 };

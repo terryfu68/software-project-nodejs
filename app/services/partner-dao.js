@@ -16,11 +16,6 @@ const findById = async (id) => {
     return Partner.findById(id);
 };
 
-const findOne = async (query) => {
-    return Partner.findOne(query);
-};
-
-
 const deleteAll = async () => {
     return Partner.remove();
 };

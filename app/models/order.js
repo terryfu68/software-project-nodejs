@@ -5,15 +5,13 @@ const orderStatus = ['Pending', 'Completed', 'Canceled'];
 
 const schema = new Schema({
     status: Number,
-    orderedAt: {type: Date, default: Date.now()},
+    orderedAt: { type: Date, default: Date.now() },
 
     // Relations
-    items: [{type: Schema.Types.ObjectId, ref: 'order-item'}],
-    customer: {type: Schema.Types.ObjectId, ref: 'customer'},
-    partner: {type: Schema.Types.ObjectId, ref: 'partner'}
+    items: [{ type: Schema.Types.ObjectId, ref: 'order-item' }],
+    customer: { type: Schema.Types.ObjectId, ref: 'customer' },
+    partner: { type: Schema.Types.ObjectId, ref: 'partner' }
 });
-
-// TODO: virtual for get total
 
 schema.virtual('orderStatus').get(() => orderStatus[this.status]);
 

@@ -4,5 +4,6 @@ const router = express.Router();
 const orderController = require('../controllers/order.controller');
 
 module.exports = (app) => {
-    app.get('/orders/:id', orderController.orderByCustomer);
+    router.get('/customer/:customerId', orderController.orderByCustomer);
+    app.use('/orders', router);
 };

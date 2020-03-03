@@ -9,7 +9,7 @@ const createAll = async (dishes) => {
 };
 
 const findAll = async (query) => {
-    return await OrderItem.find(query);
+    return OrderItem.find(query);
 };
 
 const findOne = async (query) => {
@@ -17,11 +17,11 @@ const findOne = async (query) => {
 };
 
 const findById = async (id) => {
-    return await OrderItem.findById(id);
+    return OrderItem.findById(id);
 };
 
 const deleteAll = async () => {
-    return await OrderItem.remove();
+    return OrderItem.remove({});
 };
 
 module.exports = {

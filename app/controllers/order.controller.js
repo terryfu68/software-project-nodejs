@@ -1,7 +1,7 @@
 const OrderDao = require('../services/order-dao');
 
 exports.orderByCustomer = async (req, res) => {
-    const orders = await OrderDao.findByCustomerId(req.params.id);
-
+    const {customerId} = req.params;
+    const orders = await OrderDao.findByCustomerId(customerId);
     res.send(orders);
-}
+};

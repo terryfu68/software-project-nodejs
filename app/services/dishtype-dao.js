@@ -1,26 +1,24 @@
-const Dishtype = require('../models/dishtype');
+const DishType = require('../models/dishtype');
 
-const create = async (dishtype) => {
-    return Dishtype.create(dishtype);
+const create = async (dishTypes) => {
+    return DishType.create(dishTypes);
 };
 
-const createAll = async (dishtypes) => {
-    return Dishtype.insertMany(dishtypes);
+const createMany = async (dishTypes) => {
+    return DishType.insertMany(dishTypes);
 };
-
 
 const deleteAll = async () => {
-    return Dishtype.remove();
+    return DishType.remove({});
 };
 
 const findOne = async (query) => {
-    return Dishtype.findOne(query);
+    return DishType.findOne(query);
 };
 
 module.exports = {
     create,
-    createAll,
+    createMany,
     findOne,
-    deleteAll
-
+    deleteAll,
 };

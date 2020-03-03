@@ -1,7 +1,11 @@
 const CustomerDao = require('../services/customer-dao');
+const DishTypeDao = require('../services/dishtype-dao');
+const DishDao = require('../services/dish-dao');
+const PartnerDao = require('../services/partner-dao');
+const DishAvailabilityDao = require('../services/dishavailability-dao');
 
 const customer = async () => {
-    let eduardo = await CustomerDao.findOne({ 'username': 'eduardoewgo' });
+    let eduardo = await CustomerDao.findOne({'username': 'eduardoewgo'});
 
     if (!eduardo) return CustomerDao.create({
         username: 'eduardoewgo',
@@ -16,52 +20,18 @@ const customer = async () => {
     });
 };
 
-// module.exports = {
-//     customer
-// };
+const dishType = async () => {
+    await DishTypeDao.deleteAll();
+    return DishTypeDao.createMany([{typeName: 'drink'}, {typeName: 'main'}, {typeName: 'dessert'}]);
 
-// const PartnerDao = require('../services/partner-dao');
-
-// const partner = async () => {
-
-//     let partnerTmp1 = await PartnerDao.findOne({'name': 'Andrea'});
-
-//     if (!partnerTmp1) return PartnerDao.create({
-//         name: 'Andrea',
-//         rate: '4',
-//         address: '941 Progress Avenue',
-//         city: 'Toronto',
-//         postalCode: 'M1G3T8',
-//         longitude: '1',
-//         latitude: '1'
-
-//     });
-// };
-
-// module.exports = {
-//     partner
-// };
-
-
-const DishtypeDao = require('../services/dishtype-dao');
-const DishDao = require('../services/dish-dao');
-const PartnerDao = require('../services/partner-dao');
-const DishAvailabilityDao = require('../services/dishavailability-dao');
-const OrderDao = require('../services/order-dao');
-const OrderItemDao = require('../services/order-item-dao');
-
-const dishtype = async () => {
-    DishtypeDao.deleteAll();
-    return DishtypeDao.createAll([{ typeName: 'drink' }, { typeName: 'main' }, { typeName: 'dessert' }]);
 };
 
 const dish = async () => {
-    DishDao.deleteAll();
-    let dessert = await (DishtypeDao.findOne({ 'typeName': 'dessert' }));
-    let main = await (DishtypeDao.findOne({ 'typeName': 'main' }));
-    let drink = await (DishtypeDao.findOne({ 'typeName': 'drink' }));
+    let dessert = await DishTypeDao.findOne({'typeName': 'dessert'});
+    let main = await DishTypeDao.findOne({'typeName': 'main'});
+    let drink = await DishTypeDao.findOne({'typeName': 'drink'});
 
-    return DishDao.createAll([
+    return DishDao.createMany([
         {
             name: 'Chocolate Cake',
             description: 'This is a chocolate cake',
@@ -86,14 +56,16 @@ const dish = async () => {
             partner: PartnerDao.id,
             dishAvailability: DishAvailabilityDao.dish
         }]);
+
 };
+
 
 const dishavailability = async () => {
     DishAvailabilityDao.deleteAll();
-    let cake = await (DishDao.findOne({ 'name': 'Chocolate Cake' }));
-    let pizza = await (DishDao.findOne({ 'name': 'Pizza' }));
-    let juice = await (DishDao.findOne({ 'name': 'Orange Juice' }));
-    return DishAvailabilityDao.createAll([
+    let cake = await (DishDao.findOne({'name': 'Chocolate Cake'}));
+    let pizza = await (DishDao.findOne({'name': 'Pizza'}));
+    let juice = await (DishDao.findOne({'name': 'Orange Juice'}));
+    return DishAvailabilityDao.createMany([
         {
             startDate: Date.now(),
             endDate: Date.now() + 3,
@@ -102,6 +74,7 @@ const dishavailability = async () => {
             quantity: 3,
             quantityTotal: 6,
             dish: cake.id
+
         },
         {
             startDate: Date.now() - 1,
@@ -126,11 +99,12 @@ const dishavailability = async () => {
 
 };
 
+
 const partner = async () => {
     PartnerDao.deleteAll();
-    let cakeId = (await (DishDao.findOne({ 'name': 'Chocolate Cake' }))).id;
-    let pizzaId = (await (DishDao.findOne({ 'name': 'Pizza' }))).id;
-    let juiceId = (await (DishDao.findOne({ 'name': 'Orange Juice' }))).id;
+    let cakeId = (await (DishDao.findOne({'name': 'Chocolate Cake'}))).id;
+    let pizzaId = (await (DishDao.findOne({'name': 'Pizza'}))).id;
+    let juiceId = (await (DishDao.findOne({'name': 'Orange Juice'}))).id;
 
     return PartnerDao.createAll([
         {
@@ -142,6 +116,7 @@ const partner = async () => {
             longitude: '43.682893',
             latitude: '-79.346803',
             dishes: [cakeId]
+
         },
         {
             name: 'Pizza Hut',
@@ -168,110 +143,78 @@ const partner = async () => {
 
 };
 
-const updatedish = async () => {
-    let dessert = await (DishtypeDao.findOne({ 'typeName': 'dessert' }));
-    let main = await (DishtypeDao.findOne({ 'typeName': 'main' }));
-    let drink = await (DishtypeDao.findOne({ 'typeName': 'drink' }));
 
-    let cakeId = (await (DishDao.findOne({ 'name': 'Chocolate Cake' }))).id;
-    let pizzaId = (await (DishDao.findOne({ 'name': 'Pizza' }))).id;
-    let juiceId = (await (DishDao.findOne({ 'name': 'Orange Juice' }))).id;
+const updatedish = async () => {
+    let dessert = await (DishTypeDao.findOne({'typeName': 'dessert'}));
+    let main = await (DishTypeDao.findOne({'typeName': 'main'}));
+    let drink = await (DishTypeDao.findOne({'typeName': 'drink'}));
+
+    let cakeId = (await (DishDao.findOne({'name': 'Chocolate Cake'}))).id;
+    let pizzaId = (await (DishDao.findOne({'name': 'Pizza'}))).id;
+    let juiceId = (await (DishDao.findOne({'name': 'Orange Juice'}))).id;
 
 
     DishDao.updateOne(
-        { _id: cakeId },
+        {_id: cakeId},
         {
             name: 'Chocolate Cake',
             description: 'This is a chocolate cake',
             image: 'Chocolate Cake Picture',
             dishType: dessert.id,
-            partner: (await PartnerDao.findOne({ 'name': 'Serano Bakery' })).id,
-            dishAvailability: [(await DishAvailabilityDao.findAll({ 'dish': cakeId })).pop().id]
+            partner: (await PartnerDao.findOne({'name': 'Serano Bakery'})).id,
+            dishAvailability: [(await DishAvailabilityDao.findAll({'dish': cakeId})).pop().id]
         });
 
 
     DishDao.updateOne(
-        { _id: pizzaId },
+        {_id: pizzaId},
         {
             name: 'Pizza',
             description: 'This is a pizza',
             image: 'Pizza Picture',
             dishType: main.id,
-            partner: (await PartnerDao.findOne({ 'name': 'Pizza Hut' })).id,
-            dishAvailability: [(await DishAvailabilityDao.findAll({ 'dish': pizzaId })).pop().id]
+            partner: (await PartnerDao.findOne({'name': 'Pizza Hut'})).id,
+            dishAvailability: [(await DishAvailabilityDao.findAll({'dish': pizzaId})).pop().id]
         });
 
 
-
     DishDao.updateOne(
-        { _id: juiceId },
+        {_id: juiceId},
         {
             name: 'Orange Juice',
             description: 'This is a orange juice',
             image: 'Orange Juice Picture',
             dishType: drink.id,
-            partner: (await PartnerDao.findOne({ 'name': 'Greenhouse Juice Co' })).id,
-            dishAvailability: [(await DishAvailabilityDao.findAll({ 'dish': juiceId })).pop().id]
+            partner: (await PartnerDao.findOne({'name': 'Greenhouse Juice Co'})).id,
+            dishAvailability: [(await DishAvailabilityDao.findAll({'dish': juiceId})).pop().id]
         });
 
     return;
+
 };
 
-const order = async () => {
-    OrderDao.deleteAll();
+const partner = async () => {
 
-    const partnerId = (await (PartnerDao.findOne({ 'name': 'Serano Bakery' }))).id;
-    const customerId = (await (CustomerDao.findOne({ 'username': 'eduardoewgo' }))).id;
-    // const dishId = (await (DishAvailabilityDao.findOne({ 'name': 'Chocolate Cake' }))).id;
+    let partnerTmp1 = await PartnerDao.findOne({'name': 'Andrea'});
 
-    return await OrderDao.createAll([
-        {
-            status: 1,
-            orderedAt: new Date(),
-            items: [],
-            partner: partnerId,
-            customer: customerId
-        }
-    ]);
+    if (!partnerTmp1) return PartnerDao.create({
+        name: 'Andrea',
+        rate: '4',
+        address: '941 Progress Avenue',
+        city: 'Toronto',
+        postalCode: 'M1G3T8',
+        longitude: '1',
+        latitude: '1'
+
+    });
 };
-
-const orderItem = async () => {
-    await OrderItemDao.deleteAll();
-
-    const orderId = (await (OrderDao.findAll()))[0].id;
-    const cake = await (DishDao.findOne({ 'name': 'Chocolate Cake' }));
-    const dishId = (await (DishAvailabilityDao.findOne({ 'dish': cake.id }))).id;
-
-    return await OrderItemDao.create([
-        {
-            quantity: 2,
-            order: orderId,
-            dishAvailability: dishId
-        }
-    ]);
-};
-
-const updateOrder = async () => {
-    const orderItemId = (await (OrderItemDao.findOne({ quantity: 2 }))).id;
-    const orderId = (await (OrderDao.findOne({ 'status': 1 })));
-
-    OrderDao.updateOne(
-        { _id: orderId },
-        {
-            items: [orderItemId]
-        }
-    )
-}
 
 
 module.exports = {
     customer,
-    dishtype,
+    dishtype: dishType,
     dish,
     dishavailability,
     partner,
     updatedish,
-    order,
-    orderItem,
-    updateOrder
 };

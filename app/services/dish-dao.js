@@ -4,13 +4,12 @@ const create = async (dish) => {
     return Dish.create(dish);
 };
 
-const createAll = async (dishes) => {
+const createMany = async (dishes) => {
     return Dish.insertMany(dishes);
 };
 
 const findAll = async (query) => {
-    let result =  await Dish.find(query);
-    return result;
+    return Dish.find(query);
 };
 
 const findOne = async (query) => {
@@ -22,19 +21,18 @@ const findById = async (id) => {
 };
 
 const deleteAll = async () => {
-    return Dish.remove();
+    return Dish.remove({});
 };
 
 
-const updateOne = async (query,dish) => {
-    return Dish.findOneAndUpdate(query,dish);
+const updateOne = async (query, dish) => {
+    return Dish.findOneAndUpdate(query, dish);
 };
-
 
 
 module.exports = {
     create,
-    createAll,
+    createMany,
     findAll,
     findOne,
     findById,

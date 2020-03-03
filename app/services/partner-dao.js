@@ -8,16 +8,12 @@ const findAll = async (query) => {
     return Partner.find(query);
 };
 
-const findOne = async (query) => {
-    return Partner.findOne(query);
-};
-
 const findById = async (id) => {
     return Partner.findById(id);
 };
 
 const deleteAll = async () => {
-    return Partner.remove();
+    return Partner.remove({});
 };
 
 const createAll = async (partners) => {
@@ -28,7 +24,6 @@ module.exports = {
     create,
     findAll,
     findById,
-    findOne,
     deleteAll,
     createAll,
 };

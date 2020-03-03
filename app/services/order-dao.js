@@ -21,14 +21,14 @@ const findById = async (id) => {
 };
 
 const deleteAll = async () => {
-    return Order.remove();
+    return Order.remove({});
 };
 
-const findByCustomerId = async id => {
-    return await Order.find({ 'customer': id })
+const findByCustomerId = async (customerId) => {
+    return Order.find({customer: customerId})
         .populate('partner')
         .populate('customer')
-        .populate({ path: 'items', model: 'order-item', populate: { path: 'dishAvailability' } });
+        .populate({path: 'items', model: 'order-item', populate: {path: 'dishAvailability'}});
 };
 
 const updateOne = async (query, order) => {

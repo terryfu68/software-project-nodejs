@@ -1,18 +1,14 @@
 const DishDao = require('../services/dish-dao');
-exports.findDishesbyPartnerId = async(req, res) => {
-      
-      const dishes = await DishDao.findAll({'partner':req.params.partnerId});
-      if(dishes.length===0) res.status(404).send('No dishes for the given partnerId');
-      res.send(dishes);
-   
-     
+
+exports.findDishesByPartnerId = async (req, res) => {
+    const {partnerId} = req.params;
+    const dishes = await DishDao.findAll({partner: partnerId});
+    res.send(dishes);
 };
 
-
 exports.findDishes = async (req, res) => {
-    
-    const dishes = await DishDao.findAll({});
-    if(!dishes) res.status(404).send('No any dishes');
+    const {query} = req.query;
+    const dishes = await DishDao.findAll(query);
     res.send(dishes);
-   
+
 };

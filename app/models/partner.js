@@ -7,11 +7,11 @@ const schema = new Schema({
     address: String,
     city: String,
     postalCode: String,
-    longitude: String,
-    latitude: String,
+    longitude: Number,
+    latitude: Number,
 
     // Relations
-    dishes: [{type: Schema.Types.ObjectId, ref: 'dish'}]
+    dishes: [{ type: Schema.Types.ObjectId, ref: 'dish' }]
 });
 
 module.exports = mongoose.model('partner', schema);

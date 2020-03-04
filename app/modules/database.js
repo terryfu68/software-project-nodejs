@@ -6,7 +6,7 @@ const uri = `mongodb://localhost/software-project`;
 module.exports = (shouldPopulate) => {
     // Using promise in case that we need to load the db before the app - config, etc.
     return new Promise((resolve) => {
-        mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true});
+        mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
         let db = mongoose.connection;
 
         db.on('error', () => process.exit(1));

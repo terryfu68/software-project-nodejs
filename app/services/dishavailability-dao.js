@@ -1,9 +1,9 @@
 const DishAvailability = require('../models/dishavailability');
+const Partner = require('../models/partner');
 
 const create = async (dishAvailability) => {
     return DishAvailability.create(dishAvailability);
 };
-
 
 const createMany = async (dishAvailabilities) => {
     return DishAvailability.insertMany(dishAvailabilities);
@@ -12,7 +12,6 @@ const createMany = async (dishAvailabilities) => {
 const findAll = async (query) => {
     return DishAvailability.find(query);
 };
-
 
 const findOne = async (query) => {
     return DishAvailability.findOne(query);
@@ -26,10 +25,17 @@ const deleteAll = async () => {
     return DishAvailability.remove({});
 };
 
-const findByLocation = async ({lon, lat, lon1, lat1}) => {
-    // TODO: sort out this - not sure why was pushed commented.
-    // return DishAvailability.find({ longitude: lon, latitude: })
-    // return DishAvailability.find().$where('this.dish.partner.longitude < ' + )
+const findByLocation = async (ne_lat, ne_lng, sw_lat, sw_lng) => {
+    const partners = await Partner.find({
+        latitude: { $gte: sw_lat, $lte: ne_lat },
+        longitude: { $gte: sw_lng, $lte: ne_lng }
+    }, () => { }).populate('dishes');
+
+    return partners;
+};
+
+const getAllDishesForOrder = async () => {
+    return DishAvailability.find({}).populate('dish');
 };
 
 module.exports = {
@@ -38,5 +44,7 @@ module.exports = {
     findAll,
     findOne,
     findById,
-    deleteAll
+    deleteAll,
+    findByLocation,
+    getAllDishesForOrder
 };

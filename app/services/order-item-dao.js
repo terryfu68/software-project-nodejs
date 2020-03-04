@@ -1,5 +1,4 @@
 const OrderItem = require('../models/order-item');
-
 const create = async (orderItem) => {
     return await OrderItem.create(orderItem);
 };

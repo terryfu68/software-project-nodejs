@@ -1,7 +1,22 @@
 const Order = require('../models/order');
+const OrderItemDao = require('../services/order-item-dao');
 
 const create = async (order) => {
-    return Order.create(order);
+    let orderItems = [...order.items];
+    order.items = [];
+
+    let newOrder = await Order.create(order);
+
+    for (let i = 0; i < orderItems.length; i++) {
+        const orderItem = await OrderItemDao.create(orderItems[i]);
+
+        await Order.findByIdAndUpdate(
+            newOrder._id,
+            { $push: { items: orderItem._id } },
+            { new: true, useFindAndModify: false });
+    }
+
+    return newOrder;
 };
 
 const createAll = async (dishes) => {
@@ -17,7 +32,10 @@ const findOne = async (query) => {
 };
 
 const findById = async (id) => {
-    return Order.findById(id);
+    return Order.findById(id)
+        .populate('partner')
+        .populate('customer')
+        .populate({ path: 'items', model: 'order-item', populate: { path: 'dishAvailability', populate: { path: 'dish' } } });
 };
 
 const deleteAll = async () => {
@@ -25,10 +43,10 @@ const deleteAll = async () => {
 };
 
 const findByCustomerId = async (customerId) => {
-    return Order.find({customer: customerId})
+    return Order.find({ customer: customerId })
         .populate('partner')
         .populate('customer')
-        .populate({path: 'items', model: 'order-item', populate: {path: 'dishAvailability'}});
+        .populate({ path: 'items', model: 'order-item', populate: { path: 'dishAvailability' } });
 };
 
 const updateOne = async (query, order) => {

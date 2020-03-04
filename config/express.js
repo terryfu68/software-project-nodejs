@@ -33,6 +33,7 @@ module.exports.configureExpress = () => {
     require('../app/routes/login.routes')(app);
     require('../app/routes/dish.routes')(app);
     require('../app/routes/order.routes')(app);
+    require('../app/routes/dishavailability.routes')(app);
 
     return app;
 }

@@ -10,6 +10,8 @@ const config = require('./config');
 
 module.exports.configureExpress = () => {
     const app = express();
+    const api = require('../app/routes/auth.routes');
+
 
     // Use the 'NDOE_ENV' variable to activate the 'morgan' logger or 'compress' middleware
     if (process.env.NODE_ENV === 'development') {
@@ -28,6 +30,8 @@ module.exports.configureExpress = () => {
     app.use(cors({
         origin: 'http://localhost:4200'
     }));
+    app.use('/api', api)
+
 
     //Routes
     require('../app/routes/login.routes')(app);

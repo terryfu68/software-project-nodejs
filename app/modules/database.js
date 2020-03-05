@@ -16,11 +16,11 @@ module.exports = (shouldPopulate) => {
             // Just making sure the db is inserting properly...
             if (shouldPopulate) {
                 await populate.customer();
-                // await populate.dishtype();
-                // await populate.dish();
-                // await populate.dishavailability();
-                // await populate.partner();
-                // await populate.updatedish();
+                await populate.dishType();
+                await populate.dish();
+                await populate.dishAvailability();
+                await populate.partner();
+                await populate.updatedish();
                 // await populate.order();
                 // await populate.orderItem();
                 // await populate.updateOrder();

@@ -3,6 +3,9 @@ const Partner = require('../models/partner');
 const create = async (partner) => {
     return Partner.create(partner);
 };
+const findOne = async (query) => {
+    return Partner.findOne(query);
+};
 
 const findAll = async (query) => {
     return Partner.find(query);
@@ -26,4 +29,5 @@ module.exports = {
     findById,
     deleteAll,
     createAll,
+    findOne
 };

@@ -10,8 +10,6 @@ const config = require('./config');
 
 module.exports.configureExpress = () => {
     const app = express();
-    const api = require('../app/routes/auth.routes');
-
 
     // Use the 'NDOE_ENV' variable to activate the 'morgan' logger or 'compress' middleware
     if (process.env.NODE_ENV === 'development') {
@@ -30,14 +28,17 @@ module.exports.configureExpress = () => {
     app.use(cors({
         origin: 'http://localhost:4200'
     }));
-    app.use('/api', api)
-
+    app.use((err, req, res, next) => {
+        console.error(err.stack);
+        res.status(500).send('Something went wrong!');
+    });
 
     //Routes
+    require('../app/routes/auth.routes')(app);
     require('../app/routes/login.routes')(app);
     require('../app/routes/dish.routes')(app);
     require('../app/routes/order.routes')(app);
     require('../app/routes/dishavailability.routes')(app);
 
     return app;
-}
+};

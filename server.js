@@ -2,7 +2,7 @@
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 // Initialize database
-let shouldPopulate = true;
+let shouldPopulate = false;
 require('./app/modules/database')(shouldPopulate);
 
 // Load the 'express' module

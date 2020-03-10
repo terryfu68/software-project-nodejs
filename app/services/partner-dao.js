@@ -1,33 +1,24 @@
-const Partner = require('../models/partner');
+const Partner = require("../models/partner");
 
-const create = async (partner) => {
-    return Partner.create(partner);
+module.exports.create = async partner => {
+  return Partner.create(partner);
 };
-const findOne = async (query) => {
-    return Partner.findOne(query);
-};
-
-const findAll = async (query) => {
-    return Partner.find(query);
+module.exports.findOne = async query => {
+  return Partner.findOne(query);
 };
 
-const findById = async (id) => {
-    return Partner.findById(id);
+module.exports.findAll = async query => {
+  return Partner.find(query);
 };
 
-const deleteAll = async () => {
-    return Partner.remove({});
+module.exports.findById = async id => {
+  return Partner.findById(id);
 };
 
-const createAll = async (partners) => {
-    return Partner.insertMany(partners);
+module.exports.deleteAll = async () => {
+  return Partner.remove({});
 };
 
-module.exports = {
-    create,
-    findAll,
-    findById,
-    deleteAll,
-    createAll,
-    findOne
+module.exports.createAll = async partners => {
+  return Partner.insertMany(partners);
 };

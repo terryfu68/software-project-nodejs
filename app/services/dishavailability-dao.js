@@ -1,50 +1,41 @@
-const DishAvailability = require('../models/dishavailability');
-const Partner = require('../models/partner');
+const DishAvailability = require("../models/dishavailability");
+const Partner = require("../models/partner");
 
-const create = async (dishAvailability) => {
-    return DishAvailability.create(dishAvailability);
+module.exports.create = async dishAvailability => {
+  return DishAvailability.create(dishAvailability);
 };
 
-const createMany = async (dishAvailabilities) => {
-    return DishAvailability.insertMany(dishAvailabilities);
+module.exports.createMany = async dishAvailabilities => {
+  return DishAvailability.insertMany(dishAvailabilities);
 };
 
-const findAll = async (query) => {
-    return DishAvailability.find(query);
+module.exports.findAll = async query => {
+  return DishAvailability.find(query);
 };
 
-const findOne = async (query) => {
-    return DishAvailability.findOne(query);
+module.exports.findOne = async query => {
+  return DishAvailability.findOne(query);
 };
 
-const findById = async (id) => {
-    return DishAvailability.findById(id);
+module.exports.findById = async id => {
+  return DishAvailability.findById(id);
 };
 
-const deleteAll = async () => {
-    return DishAvailability.remove({});
+module.exports.deleteAll = async () => {
+  return DishAvailability.remove({});
 };
 
-const findByLocation = async (ne_lat, ne_lng, sw_lat, sw_lng) => {
-    const partners = await Partner.find({
-        latitude: { $gte: sw_lat, $lte: ne_lat },
-        longitude: { $gte: sw_lng, $lte: ne_lng }
-    }, () => { }).populate('dishes');
+module.exports.findByLocation = async (ne_lat, ne_lng, sw_lat, sw_lng) => {
+  const partners = await Partner.find(
+    {
+      latitude: { $gte: sw_lat, $lte: ne_lat },
+      longitude: { $gte: sw_lng, $lte: ne_lng }
+    },
+    () => {}
+  ).populate("dishes");
 
-    return partners;
+  return partners;
 };
-
-const getAllDishesForOrder = async () => {
-    return DishAvailability.find({}).populate('dish');
-};
-
-module.exports = {
-    create,
-    createMany,
-    findAll,
-    findOne,
-    findById,
-    deleteAll,
-    findByLocation,
-    getAllDishesForOrder
+module.exports.getAllDishesForOrder = async () => {
+  return DishAvailability.find({}).populate("dish");
 };

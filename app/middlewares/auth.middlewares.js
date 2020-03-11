@@ -4,9 +4,8 @@ const {body} = require("express-validator");
 module.exports.customerCreateValidationRules = () => [
   body("email", "Email cannot be empty").not().isEmpty(),
   body("password", "Must but at least 3 and max 10 in length").not().isEmpty().isLength({min: 3, max: 10}),
-  body("username", "Must but at least 3 in length").not().isEmpty().isLength({min: 3}),
-  body("firstName", "Must but at least 3 in length").not().isEmpty().isLength({min: 3}),
-  body("lastName", "Must but at least 3 in length").not().isEmpty().isLength({min: 3}),
+  body("firstName", "Must but at least 3 in length").not().isEmpty().isLength({min: 1}),
+  body("lastName", "Must but at least 3 in length").not().isEmpty().isLength({min: 1}),
   body("phoneNumber", "Must but at least 11 in length").not().isEmpty().isLength({min: 3}),
 ];
 

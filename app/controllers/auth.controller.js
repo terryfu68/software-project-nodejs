@@ -4,15 +4,15 @@ const bcrypt = require("bcrypt");
 
 module.exports.signUp = async (req, res) => {
   try {
-    const {firstName, lastName, email, password, username, address, city, postalCode, phoneNumber} = req.body;
+    const {firstName, lastName, email, password, address, city, postalCode, phoneNumber} = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
     const customer = await CustomerDao.create({
-      firstName, username, lastName, address,
+      firstName, lastName, address,
       city, postalCode, phoneNumber, email, password: hashedPassword
     });
     res.status(200).send(customer);
   } catch (e) {
-    console.log(`Something went wrong`);
+    console.log(`Something went wrong`, e.message);
     res.status(500).send(e.message);
   }
 };
@@ -24,13 +24,18 @@ module.exports.login = async (req, res) => {
 
     if (!customer) return res.status(401).send("Incorrect credentials.");
 
-    await bcrypt.compare(password, customer.password);
-    const jwtToken = jwt.sign(
-      {email: customer.email, customerId: customer._id},
-      "longer-secret-is-better",
-      {expiresIn: "1h"}
-    );
-    res.status(200).send({token: jwtToken, expiresIn: 3600, customer});
+    const isPasswordCorrect = await bcrypt.compare(password, customer.password);
+
+    if (isPasswordCorrect) {
+      const jwtToken = jwt.sign(
+          {email: customer.email, customerId: customer._id},
+          "longer-secret-is-better",
+          {expiresIn: "1h"}
+      );
+      res.status(200).send({token: jwtToken, expiresIn: 3600, customer});
+    } else {
+      res.status(401).send("Incorrect credentials.");
+    }
   } catch (e) {
     console.log(`Something went wrong`, e.message);
     res.status(500).send(`Something went wrong`);

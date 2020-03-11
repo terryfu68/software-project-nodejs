@@ -9,7 +9,6 @@ const OrderItemDao = require("../services/order-item-dao");
 module.exports.customer = async () => {
   return CustomerDao.create({
     email: "ed@gmail.com",
-    username: "eduardoewgo",
     password: "nope",
     firstName: "Eduardo",
     lastName: "Wickert",

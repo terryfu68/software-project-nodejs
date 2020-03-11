@@ -25,14 +25,11 @@ module.exports.deleteAll = async () => {
   return DishAvailability.remove({});
 };
 
-module.exports.findByLocation = async (ne_lat, ne_lng, sw_lat, sw_lng) => {
-  const partners = await Partner.find(
-    {
-      latitude: { $gte: sw_lat, $lte: ne_lat },
-      longitude: { $gte: sw_lng, $lte: ne_lng }
-    },
-    () => {}
-  ).populate("dishes");
+module.exports.findByLocation = async ({ne_lat, ne_lng, sw_lat, sw_lng, partnerIds, term}) => {
+  const partners = await Partner.find({
+    latitude: {$gte: sw_lat, $lte: ne_lat},
+    longitude: {$gte: sw_lng, $lte: ne_lng}
+  });
 
   return partners;
 };

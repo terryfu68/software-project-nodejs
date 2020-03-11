@@ -1,16 +1,27 @@
 const DishAvailabilityDao = require('../services/dishavailability-dao');
 
-exports.findDishAvailabilityByLocation = async (req, res) => {
-    const dishes = await DishAvailabilityDao.findByLocation(
-        req.body.data.ne_lat,
-        req.body.data.ne_lng,
-        req.body.data.sw_lat,
-        req.body.data.sw_lng
-    );
-    res.send(dishes);
+exports.findByLocation = async (req, res) => {
+    try {
+        const {ne_lat, ne_lng, sw_lat, sw_lng} = req.query;
+        const dishes = await DishAvailabilityDao.findByLocation(
+            ne_lat,
+            ne_lng,
+            sw_lat,
+            sw_lng
+        );
+        res.send(dishes);
+    } catch (error) {
+        console.log(`Something went wrong`, e.message);
+        res.status(500).send(`Something went wrong`);
+    }
 };
 
-exports.getAll = async (req, res) => {
-    const dishes = await DishAvailabilityDao.getAllDishesForOrder();
-    res.send(dishes);
+exports.findAll = async (req, res) => {
+    try {
+        const dishes = await DishAvailabilityDao.findAll();
+        res.send(dishes);
+    } catch (error) {
+        console.log(`Something went wrong`, e.message);
+        res.status(500).send(`Something went wrong`);
+    }
 }

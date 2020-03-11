@@ -4,7 +4,7 @@ const router = express.Router();
 const dishAvailabilityController = require('../controllers/dishavailability.controller');
 
 module.exports = (app) => {
-    router.post('/findDishes', dishAvailabilityController.findDishAvailabilityByLocation);
-    router.get('/availableDishes', dishAvailabilityController.getAll);
-    app.use(router);
+    router.get('/findByLocation', dishAvailabilityController.findByLocation);
+    router.get('/', dishAvailabilityController.findAll);
+    app.use('/dish-availability', router);
 };

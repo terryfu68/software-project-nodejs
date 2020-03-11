@@ -10,7 +10,7 @@ module.exports.createMany = async dishAvailabilities => {
 };
 
 module.exports.findAll = async query => {
-  return DishAvailability.find(query);
+  return DishAvailability.find(query).populate("dish");
 };
 
 module.exports.findOne = async query => {
@@ -35,7 +35,4 @@ module.exports.findByLocation = async (ne_lat, ne_lng, sw_lat, sw_lng) => {
   ).populate("dishes");
 
   return partners;
-};
-module.exports.getAllDishesForOrder = async () => {
-  return DishAvailability.find({}).populate("dish");
 };

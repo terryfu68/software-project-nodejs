@@ -19,3 +19,8 @@ module.exports.findById = async id => {
 module.exports.deleteAll = async () => {
   return Customer.remove({});
 };
+
+
+module.exports.updateById = async (id,body) => {
+  return Customer.updateOne(id,body);
+};

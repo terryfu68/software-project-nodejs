@@ -35,3 +35,10 @@ const CustomerDao = require("../services/customer-dao");
 //     }
 //   });
 // };
+
+
+module.exports.updateCustomer = async (req, res) => {
+    const id = req.params.customerId;
+    const customer = await CustomerDao.updateById({_id: id},req.body);
+    res.send(customer); 
+};

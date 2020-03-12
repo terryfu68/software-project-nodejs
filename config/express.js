@@ -39,6 +39,7 @@ module.exports.configureExpress = () => {
     require('../app/routes/dish.routes')(app);
     require('../app/routes/order.routes')(app);
     require('../app/routes/dishavailability.routes')(app);
-
+    require('../app/routes/partner.routes')(app);
+    require('../app/routes/customer.routes')(app);
     return app;
 };

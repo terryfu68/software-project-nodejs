@@ -11,3 +11,10 @@ exports.readPartnerByCity = async (req, res) => {
     const partners = await PartnerDao.findAll({city});
     res.send(partners);
 };
+
+
+exports.updatePartner = async (req, res) => {
+    const id= req.params.partnerId;
+    const partner = await PartnerDao.updateById({_id: id},req.body);
+    res.send(partner); 
+};

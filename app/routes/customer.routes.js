@@ -1,4 +1,5 @@
 const express = require("express");
+const {check} = require('express-validator');
 const router = express.Router();
 const customerController = require("../controllers/customer.controller");
 
@@ -26,7 +27,7 @@ const validateCreateBody = [
     .isLength({ min: 8, max: 20 })
 ];
 
-module.exports = app => {
+module.exports = (app) => {
   // router.get("/:customerId", authController.getCustomer);
   //
   // // Update User
@@ -34,5 +35,8 @@ module.exports = app => {
   //
   // // Delete User
   // router.delete("/:customerId");
-  app.use('/customer', router);
+
+  router.put("/updatecustomer/:customerId", customerController.updateCustomer);
+  app.use(router);
+
 };

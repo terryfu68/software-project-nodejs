@@ -16,5 +16,3 @@ describe("Partner", function () {
         });
     });
 });
-
-

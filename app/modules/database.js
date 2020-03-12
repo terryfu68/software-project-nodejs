@@ -3,6 +3,7 @@ const populate = require("./populate");
 
 const uri = `mongodb://${process.env.SPUSER || "dbuser"}:${process.env.SPPASS ||
   "!SP321"}@ds123603.mlab.com:23603/software-project`;
+// const uri = `mongodb://localhost:27017/softwareproject`;
 
 module.exports = shouldPopulate => {
   // Using promise in case that we need to load the db before the app - config, etc.

@@ -1,14 +1,12 @@
 const mongoose = require("mongoose");
 const populate = require("./populate");
-
-const uri = `mongodb://${process.env.SPUSER || "dbuser"}:${process.env.SPPASS ||
-  "!SP321"}@ds123603.mlab.com:23603/software-project`;
+const config = require("../../config/config")
 
 module.exports = shouldPopulate => {
   // Using promise in case that we need to load the db before the app - config, etc.
   return new Promise((resolve, reject) => {
     try {
-      mongoose.connect(uri, {
+      mongoose.connect(config.dbUri, {
         useNewUrlParser: true,
         useUnifiedTopology: true
       });
@@ -32,8 +30,8 @@ module.exports = shouldPopulate => {
         resolve();
       });
     } catch (error) {
-        reject(error); // This isn't being catch yet.
-        console.log(`Database failed at some point.`, e.message);
+      reject(error); // This isn't being catch yet.
+      console.log(`Database failed at some point.`, e.message);
     }
   });
 };

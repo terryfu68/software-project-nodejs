@@ -12,7 +12,7 @@ module.exports.configureExpress = () => {
     const app = express();
 
     // Use the 'NDOE_ENV' variable to activate the 'morgan' logger or 'compress' middleware
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
         app.use(morgan('dev'));
     } else if (process.env.NODE_ENV === 'production') {
         app.use(compress());

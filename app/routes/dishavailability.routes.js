@@ -5,6 +5,6 @@ const dishAvailabilityController = require('../controllers/dishavailability.cont
 
 module.exports = (app) => {
     router.post('/findDishes', dishAvailabilityController.findDishAvailabilityByLocation);
-    router.get('/availableDishes', dishAvailabilityController.getAll);
+    router.get('/dish-availability', dishAvailabilityController.getAll);
     app.use(router);
 };

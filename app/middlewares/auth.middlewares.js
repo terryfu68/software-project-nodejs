@@ -3,15 +3,15 @@ const {body} = require("express-validator");
 
 module.exports.customerCreateValidationRules = () => [
   body("email", "Email cannot be empty").not().isEmpty(),
-  body("password", "Must but at least 3 and max 10 in length").not().isEmpty().isLength({min: 3, max: 10}),
-  body("firstName", "Must but at least 3 in length").not().isEmpty().isLength({min: 1}),
-  body("lastName", "Must but at least 3 in length").not().isEmpty().isLength({min: 1}),
-  body("phoneNumber", "Must but at least 11 in length").not().isEmpty().isLength({min: 3}),
+  body("password", "Must be at least 3 and max 10 in length").not().isEmpty().isLength({min: 3, max: 10}),
+  body("firstName", "Must be at least 3 in length").not().isEmpty().isLength({min: 1}),
+  body("lastName", "Must be at least 3 in length").not().isEmpty().isLength({min: 1}),
+  body("phoneNumber", "Must be at least 11 in length").not().isEmpty().isLength({min: 3}),
 ];
 
 module.exports.customerLoginValidationRules = () => [
   body("email", "Email cannot be empty").not().isEmpty(),
-  body("password", "Must but at least 3 and max 10 in length").not().isEmpty().isLength({min: 3, max: 10}),
+  body("password", "Must be at least 3 and max 10 in length").not().isEmpty().isLength({min: 3, max: 10}),
 ];
 
 module.exports.authorize = (req, res, next) => {

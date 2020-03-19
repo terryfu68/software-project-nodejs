@@ -7,9 +7,9 @@ exports.orderByCustomer = async (req, res) => {
 };
 
 exports.createOrder = async (req, res) => {
-    await OrderDao.create(req.body);
+    const order = await OrderDao.create(req.body);
 
-    res.sendStatus(200);
+    res.send(order._id);
 }
 
 exports.orderById = async (req, res) => {

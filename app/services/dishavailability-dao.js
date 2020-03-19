@@ -10,7 +10,12 @@ module.exports.createMany = async dishAvailabilities => {
 };
 
 module.exports.findAll = async query => {
-  return DishAvailability.find(query).populate("dish");
+  return DishAvailability.find(query).populate({
+    path: "dish",
+    populate: {
+      path: "partner"
+    }
+  });
 };
 
 module.exports.findOne = async query => {
@@ -25,14 +30,27 @@ module.exports.deleteAll = async () => {
   return DishAvailability.remove({});
 };
 
-module.exports.findByLocation = async ({ ne_lat, ne_lng, sw_lat, sw_lng }) => {
+module.exports.findByLocation = async ({
+  ne_lat,
+  ne_lng,
+  sw_lat,
+  sw_lng
+}) => {
   const partners = await Partner.find({
-    latitude: { $gte: sw_lat, $lte: ne_lat },
-    longitude: { $gte: sw_lng, $lte: ne_lng },
+    latitude: {
+      $gte: sw_lat,
+      $lte: ne_lat
+    },
+    longitude: {
+      $gte: sw_lng,
+      $lte: ne_lng
+    },
   }).populate({
     path: "dishes",
     model: "dish",
-    populate: { path: "dishAvailability" }
+    populate: {
+      path: "dishAvailability"
+    }
   });;
 
   return partners;

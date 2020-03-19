@@ -24,14 +24,14 @@ const CustomerDao = require("../services/customer-dao");
 //   );
 // };
 //
-// module.exports.deleteCustomer = (req, res, next) => {
-//   userSchema.findByIdAndRemove(req.params.id, (error, data) => {
-//     if (error) {
-//       return next(error);
-//     } else {
-//       res.status(200).json({
-//         msg: data
-//       });
-//     }
-//   });
-// };
+module.exports.deleteCustomer = async (req, res) => {
+    try {
+        const customer = await CustomerDao.delete({
+            _id: req.param('customerId')
+        });
+        res.status(200).send(customer);
+    } catch (error) {
+        console.log(`Something went wrong`, error.message);
+        res.status(500).send(`Something went wrong`);
+    }
+};

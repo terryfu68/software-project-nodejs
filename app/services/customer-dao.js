@@ -19,3 +19,7 @@ module.exports.findById = async id => {
 module.exports.deleteAll = async () => {
   return Customer.remove({});
 };
+
+module.exports.delete = async query => {
+  return Customer.remove(query);
+};

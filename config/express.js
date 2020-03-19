@@ -35,6 +35,7 @@ module.exports.configureExpress = () => {
 
     //Routes
     require('../app/routes/auth.routes')(app);
+    require('../app/routes/customer.routes')(app);
     require('../app/routes/partner.routes')(app);
     require('../app/routes/login.routes')(app);
     require('../app/routes/dish.routes')(app);

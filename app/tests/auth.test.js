@@ -8,7 +8,7 @@ const chaiExclude = require("chai-exclude");
 
 chai.use(chaiExclude);
 
-describe("Auth", function() {
+describe("Auth", function () {
     this.slow(200);
 
     const bodyDefaultUser = {
@@ -49,7 +49,7 @@ describe("Auth", function() {
         }
     });
 
-    describe("Sign Up", function() {
+    describe("Sign Up", function () {
         it("should return error message on empty fields", async () => {
             const response = await request({
                 uri: `${api}/signup`,
@@ -138,6 +138,99 @@ describe("Auth", function() {
             });
             expect(response.statusCode).to.be.equal(200);
             expect(response.body).to.be.deep.include(expectResult);
+        });
+
+        it("should return error as the user is already registered", async () => {
+            let expectedMessage = "E11000 duplicate key error collection: test-justeatit.customers index: phoneNumber_1 dup key: { phoneNumber: 4163211234.0 }";
+            const response = await request({
+                uri: `${api}/signup`,
+                resolveWithFullResponse: true,
+                json: true,
+                method: "POST",
+                body: bodyDefaultUser
+            }).catch(err => {
+                expect(err.response.statusCode).to.be.equal(500);
+                expect(err.error).to.be.equal(expectedMessage);
+            });
+            expect(response).to.be.undefined;
+        });
+    });
+
+    describe("Sign In", function () {
+        it("should return error message on empty fields", async () => {
+            const response = await request({
+                uri: `${api}/login`,
+                resolveWithFullResponse: true,
+                json: true,
+                method: "POST"
+            }).catch(err => {
+                expect(err.response.statusCode).to.be.equal(422);
+                expect(err.error)
+                    .to.be.an("array")
+                    .and.have.lengthOf(2);
+                expect(err.error).to.deep.include({
+                    email: "Email cannot be empty"
+                });
+                expect(err.error).to.deep.include({
+                    password: "Must be at least 3 and max 10 in length"
+                });
+            });
+            expect(response).to.be.undefined;
+        });
+
+        it("should return error message for email not found", async () => {
+            const body = {
+                email: "bbb@aaa.ccc",
+                password: "123"
+            };
+            const expectedMessage = `Incorrect credentials.`;
+            const response = await request({
+                uri: `${api}/login`,
+                resolveWithFullResponse: true,
+                json: true,
+                method: "POST",
+                body: body
+            }).catch(err => {
+                expect(err.response.statusCode).to.be.equal(401);
+                expect(err.error).to.be.equal(expectedMessage);
+            });
+            expect(response).to.be.undefined;
+        });
+
+        it("should return error message for invalid password", async () => {
+            const body = {
+                email: bodyDefaultUser.email,
+                password: "zzzz"
+            };
+            const expectedMessage = `Incorrect credentials.`;
+            const response = await request({
+                uri: `${api}/login`,
+                resolveWithFullResponse: true,
+                json: true,
+                method: "POST",
+                body: body
+            }).catch(err => {
+                expect(err.response.statusCode).to.be.equal(401);
+                expect(err.error).to.be.equal(expectedMessage);
+            });
+            expect(response).to.be.undefined;
+        });
+
+        it("should login successfully into the system with the user created", async () => {
+            const expectedKeys = ['token', 'expiresIn', 'customer'];
+            const body = {
+                email: bodyDefaultUser.email,
+                password: bodyDefaultUser.password
+            };
+            const response = await request({
+                uri: `${api}/login`,
+                resolveWithFullResponse: true,
+                json: true,
+                method: "POST",
+                body: body
+            });
+            expect(response.statusCode).to.be.equal(200);
+            expect(response.body).to.contain.keys(expectedKeys);
         });
     });
 });

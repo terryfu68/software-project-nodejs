@@ -7,7 +7,7 @@
         "dev": "nodemon .",
         "test": "run-p -r test:server test:exec",
         "test:server": "cross-env NODE_ENV=test PORT=3010 node server.js",
-        "test:exec": "mocha app/tests"
+        "test:exec": "cross-env NODE_ENV=test mocha app/tests"
     },
     "keywords": [],
     "author": "Eduardo",

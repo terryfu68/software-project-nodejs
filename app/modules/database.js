@@ -20,8 +20,7 @@ module.exports = shouldPopulate => {
                 // Just making sure the db is inserting properly...
                 if (shouldPopulate) {
                     await populate.clean();
-                    await populate.customer();
-                    await populate.partner();
+                    await populate.users();
                     await populate.dishType();
                     await populate.dish();
                     await populate.dishAvailability();

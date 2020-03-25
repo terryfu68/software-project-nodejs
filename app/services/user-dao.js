@@ -25,5 +25,9 @@ module.exports.deleteAll = async () => {
 };
 
 module.exports.createAll = async users => {
-  return User.insertMany(users);
+  // insertMany won't active hooks, so I'm iterating over the list
+  // this should be done in the other createAll methods.
+  for (const u of users) {
+    await User.create(u);
+  }
 };

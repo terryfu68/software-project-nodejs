@@ -5,9 +5,7 @@ const bcrypt = require("bcrypt");
 module.exports.signUp = async (req, res) => {
   try {
     const userBody = req.body;
-    const hashedPassword = await bcrypt.hash(userBody.password, 10);
-
-    const user = await UserDao.create({...userBody, password: hashedPassword});
+    const user = await UserDao.create(userBody);
     res.status(200).send(user);
   } catch (e) {
     console.log(`Something went wrong`, e.message);

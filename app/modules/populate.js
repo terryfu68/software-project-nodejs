@@ -1,37 +1,46 @@
-const CustomerDao = require("../services/customer-dao");
-const DishTypeDao = require("../services/dishtype-dao");
+const UserDao = require("../services/user-dao");
 const DishDao = require("../services/dish-dao");
 const PartnerDao = require("../services/partner-dao");
 const DishAvailabilityDao = require("../services/dishavailability-dao");
 const OrderDao = require("../services/order-dao");
 const OrderItemDao = require("../services/order-item-dao");
 
-module.exports.customer = async () => {
-  return CustomerDao.create({
+
+module.exports.users = async () => {
+  const customer = {
     email: "ed@gmail.com",
-    password: "nope",
+    password: "123",
     firstName: "Eduardo",
     lastName: "Wickert",
     address: "25 Montgomery",
     city: "Toronto",
     phoneNumber: "6476161114",
     postalCode: "M4R0A1",
-    lastAccess: Date.now(),
-    is2FA: false,
-    isLocal: false
-  });
+    role: "Customer"
+  };
+
+  const partner = {
+    email: "p1@gmail.com",
+    password: "123",
+    companyName: "Fresh",
+    phoneNumber: "999",
+    postalCode: "M4R0A1",
+    role: "Partner"
+  };
+
+  return UserDao.createAll([customer, partner]);
 };
 
 module.exports.partner = async () => {
   return PartnerDao.createAll([{
-      name: "Serano Bakery",
-      rate: 4.7,
-      address: "830 Pape Ave",
-      city: "Toronto",
-      postalCode: "M4K 3T5",
-      longitude: 43.682893,
-      latitude: -79.346803
-    },
+    name: "Serano Bakery",
+    rate: 4.7,
+    address: "830 Pape Ave",
+    city: "Toronto",
+    postalCode: "M4K 3T5",
+    longitude: 43.682893,
+    latitude: -79.346803
+  },
     {
       name: "Pizza Hut",
       rate: 2.6,
@@ -55,8 +64,8 @@ module.exports.partner = async () => {
 
 module.exports.dishType = async () => {
   return DishTypeDao.createMany([{
-      typeName: "drink"
-    },
+    typeName: "drink"
+  },
     {
       typeName: "main"
     },
@@ -68,10 +77,10 @@ module.exports.dishType = async () => {
 
 module.exports.dish = async () => {
   return DishDao.createMany([{
-      name: "Chocolate Cake",
-      description: "This is a chocolate cake",
-      image: "https://cdn-image.foodandwine.com/sites/default/files/styles/4_3_horizontal_-_1200x900/public/1532533774/moms-chocolate-cake-XL-RECIPE0918.jpg?itok=MBMhBzj_"
-    },
+    name: "Chocolate Cake",
+    description: "This is a chocolate cake",
+    image: "https://cdn-image.foodandwine.com/sites/default/files/styles/4_3_horizontal_-_1200x900/public/1532533774/moms-chocolate-cake-XL-RECIPE0918.jpg?itok=MBMhBzj_"
+  },
     {
       name: "Strawberry Cheesecake",
       description: "The best strawberry cheesecake in the city",
@@ -145,14 +154,14 @@ module.exports.dishAvailability = async () => {
   });
 
   return DishAvailabilityDao.createMany([{
-      startDate: Date.now(),
-      endDate: Date.now() + 3,
-      originalPrice: 16,
-      discountPrice: 9,
-      quantity: 100,
-      quantityTotal: 100,
-      dish: cake._id
-    },
+    startDate: Date.now(),
+    endDate: Date.now() + 3,
+    originalPrice: 16,
+    discountPrice: 9,
+    quantity: 100,
+    quantityTotal: 100,
+    dish: cake._id
+  },
     {
       startDate: Date.now(),
       endDate: Date.now() + 3,
@@ -413,9 +422,7 @@ module.exports.updateDishes = async () => {
 };
 
 module.exports.clean = async () => {
-  await CustomerDao.deleteAll();
-  await PartnerDao.deleteAll();
-  await DishTypeDao.deleteAll();
+  await UserDao.deleteAll();
   await DishDao.deleteAll();
   await DishAvailabilityDao.deleteAll();
   await OrderDao.deleteAll();

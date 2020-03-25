@@ -2,7 +2,7 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-  "email": "changethis@gmail.com",
+  "email": "p1s@gmail.com",
   "password": "1234"
 }
 
@@ -15,7 +15,20 @@ Content-Type: application/json
   "lastName": "Wick",
   "email": "changethis@gmail.com",
   "password": "1234",
-  "phoneNumber": "6476161114"
+  "phoneNumber": "6476161114",
+  "role": "Customer"
+}
+
+###
+POST http://localhost:3000/auth/signup/
+Content-Type: application/json
+
+{
+  "companyName": "P1",
+  "email": "p1s@gmail.com",
+  "phoneNumber": "114",
+  "password": "1234",
+  "role": "Partner"
 }
 
 ###

@@ -1,0 +1,8 @@
+PUT http://localhost:3000/user/5e7bca3894a53984b706c23b
+Content-Type: application/json
+
+{
+  "companyName": "Fresh"
+}
+
+###

@@ -1,15 +1,14 @@
 const jwt = require("jsonwebtoken");
 const {body} = require("express-validator");
 
-module.exports.customerCreateValidationRules = () => [
+module.exports.userCreateValidationRules = () => [
   body("email", "Email cannot be empty").not().isEmpty(),
   body("password", "Must be at least 3 and max 10 in length").not().isEmpty().isLength({min: 3, max: 10}),
-  body("firstName", "Must be at least 3 in length").not().isEmpty().isLength({min: 1}),
-  body("lastName", "Must be at least 3 in length").not().isEmpty().isLength({min: 1}),
-  body("phoneNumber", "Must be at least 11 in length").not().isEmpty().isLength({min: 3}),
+  body("role", "Cannot be empty").not().isEmpty().isString(),
+  body("phoneNumber", "Phone number cannot be empty").not().isEmpty(),
 ];
 
-module.exports.customerLoginValidationRules = () => [
+module.exports.userLoginValidationRules = () => [
   body("email", "Email cannot be empty").not().isEmpty(),
   body("password", "Must be at least 3 and max 10 in length").not().isEmpty().isLength({min: 3, max: 10}),
 ];

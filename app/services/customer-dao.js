@@ -23,3 +23,7 @@ module.exports.deleteAll = async () => {
 module.exports.delete = async query => {
   return Customer.remove(query);
 };
+
+module.exports.updateById = async (id,body) => {
+  return Customer.updateOne(id,body);
+};

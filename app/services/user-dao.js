@@ -31,3 +31,8 @@ module.exports.createAll = async users => {
     await User.create(u);
   }
 };
+
+
+module.exports.delete = async query => {
+  return User.remove(query);
+};

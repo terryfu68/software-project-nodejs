@@ -27,3 +27,7 @@ module.exports.deleteAll = async () => {
 module.exports.updateOne = async (query, dish) => {
   return Dish.findOneAndUpdate(query, dish);
 };
+
+module.exports.updateById = async (id,body) => {
+  return Dish.updateOne(id,body);
+};

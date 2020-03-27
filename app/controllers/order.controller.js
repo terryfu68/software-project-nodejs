@@ -18,3 +18,17 @@ exports.orderById = async (req, res) => {
 
     res.send(order);
 }
+
+
+exports.orderByPartner = async (req, res) => {
+    const { id } = req.params;
+    const orders = await OrderDao.findByPartnerId(id);
+    res.send(orders);
+};
+
+exports.changeOrderStatus = async (req, res) => {
+    const id= req.params.orderId;
+    const order = await OrderDao.updateById({_id: id},req.body);
+    res.send(order); 
+};
+

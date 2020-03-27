@@ -8,5 +8,7 @@ module.exports = (app) => {
     router.get('/orders/:id', orderController.orderByCustomer);
     router.get('/orderDetails/:id', orderController.orderById);
     router.post('/createOrder', orderController.createOrder);
+    router.get('/ordersByPartner/:id', orderController.orderByPartner);
+    router.put('/changeOrderStatus/:orderId', orderController.changeOrderStatus);
     app.use(router);
 };

@@ -22,3 +22,4 @@ module.exports.deleteAll = async () => {
 module.exports.createAll = async partners => {
   return Partner.insertMany(partners);
 };
+

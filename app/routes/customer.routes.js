@@ -42,6 +42,5 @@ module.exports = app => {
   // router.put("/:customerId", authController.updateCustomer);
   //
   // Delete User
-  router.delete("/:customerId", customerController.deleteCustomer);
-  app.use('/customer', router);
+   app.use('/customer', router);
 };

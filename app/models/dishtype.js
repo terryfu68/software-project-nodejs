@@ -5,4 +5,4 @@ const schema = new Schema({
     typeName: String
 });
 
-module.exports = mongoose.model('dish-type', schema);
+module.exports = mongoose.model('dishtype', schema);

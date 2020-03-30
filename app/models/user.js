@@ -34,7 +34,7 @@ const schema = new Schema({
     default: false
   },
 
-  role: {type: String, enum: ['Customer', 'Partner'], required: true},
+  role: {type: String, enum: ['Customer', 'Partner'], required: false},
   isActive: {type: Boolean, default: true},
 
   // Partner fields

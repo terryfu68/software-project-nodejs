@@ -4,7 +4,7 @@ const {body} = require("express-validator");
 module.exports.userCreateValidationRules = () => [
   body("email", "Email cannot be empty").not().isEmpty(),
   body("password", "Must be at least 3 and max 10 in length").not().isEmpty().isLength({min: 3, max: 10}),
-  body("role", "Cannot be empty").not().isEmpty().isString(),
+  // body("role", "Cannot be empty").not().isEmpty().isString(),
   body("phoneNumber", "Phone number cannot be empty").not().isEmpty(),
 ];
 

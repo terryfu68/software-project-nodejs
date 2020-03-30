@@ -1,5 +1,17 @@
 const UserDao = require('../services/user-dao');
 
+
+exports.userProfile = async (req, res) => {
+   try{
+    //  const _id = req.params.id;
+    //  const user = req.body;
+     const user = await UserDao.findById(req.params.id);
+     res.send(user);
+   } catch (e) {
+    console.log(`Something went wrong`, e.message);
+    res.status(500).send(e.message);
+   }
+}
 exports.edit = async (req, res) => {
   try {
     const _id = req.params.userId;

@@ -32,3 +32,13 @@ exports.changeOrderStatus = async (req, res) => {
     res.send(order); 
 };
 
+
+
+exports.orderHistoryByPartner = async (req, res) => {
+    const { id } = req.params;
+    const { status } = req.params;
+    const orders = await OrderDao.findByPartnerIdAndStatus(id,status);
+    res.send(orders);
+};
+
+

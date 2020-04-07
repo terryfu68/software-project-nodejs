@@ -10,5 +10,6 @@ module.exports = (app) => {
     router.post('/createOrder', orderController.createOrder);
     router.get('/ordersByPartner/:id', orderController.orderByPartner);
     router.put('/changeOrderStatus/:orderId', orderController.changeOrderStatus);
+    router.get('/orderHistoryByPartner/:id/:status', orderController.orderHistoryByPartner);
     app.use(router);
 };

@@ -34,3 +34,21 @@ exports.delete = async (req, res) => {
     res.status(500).send(e.message);
   }
 };
+
+
+
+exports.listAllUsers = async (req, res) => {
+  try{
+    const users = await UserDao.findAll();
+    res.send(users);
+  } catch (e) {
+   console.log(`Something went wrong`, e.message);
+   res.status(500).send(e.message);
+  }
+}
+
+
+exports.createUser = async (req, res) => {
+  const user = await UserDao.create(req.body);
+  res.send(user._id);
+}

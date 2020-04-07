@@ -71,3 +71,9 @@ module.exports.updateById = async (id,body) => {
   return Order.updateOne(id,body);
 };
 
+
+
+module.exports.findByPartnerIdAndStatus = async (id,status)  => {
+  return Order.find({ partner: id, status:status })
+};
+

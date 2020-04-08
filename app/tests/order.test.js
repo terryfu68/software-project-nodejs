@@ -57,6 +57,33 @@ describe("Order", function () {
         });
     });
 
+
+    describe("Find Orders by Partner", () => {
+        let partnerId = "5e781b28a08b693a009a5d82";
+        it("shoud return error for non-exist partner id", async () => {
+            const response = await request({
+                uri: `${api}/ordersByPartner/${partnerId}`,
+                resolveWithFullResponse: true,
+                json: true
+            });
+            expect(response.statusCode).to.be.equal(200);
+        });
+    });
+
+
+    describe("Find History Orders by Partner", () => {
+        let partnerId = "5e781b28a08b693a009a5d82";
+        let status = 1;
+        it("shoud return error for non-exist partner id", async () => {
+            const response = await request({
+                uri: `${api}/orderHistoryByPartner/${partnerId}/${status}`,
+                resolveWithFullResponse: true,
+                json: true
+            });
+            expect(response.statusCode).to.be.equal(200);
+        });
+    });
+
     after(async () => {
         await mongoose.disconnect();
     });
